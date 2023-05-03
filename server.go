@@ -4,12 +4,17 @@ import (
     "fmt"
     "log"
     "net/http"
+    "crypto/boring"
 )
 
 var greeting string = "Hello"
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "%s OpenShift!\n", greeting)
+    if boring.Enabled() {
+        fmt.Fprintf(w, "%s OpenShift! (fips-ready)\n", greeting)
+    } else {
+        fmt.Fprintf(w, "%s OpenShift!\n", greeting)
+   }
 }
 
 func main() {
